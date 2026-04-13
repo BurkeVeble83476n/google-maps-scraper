@@ -29,6 +29,8 @@ RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o /usr/bin/google-maps-scraper
 FROM debian:bookworm-slim
 ENV PLAYWRIGHT_BROWSERS_PATH=/opt/browsers
 ENV PLAYWRIGHT_DRIVER_PATH=/opt
+# Run as a non-root user for better security
+RUN useradd -m -u 1000 scraper
 
 # Install only the necessary dependencies in a single layer
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -59,8 +61,11 @@ COPY --from=playwright-deps /opt/browsers /opt/browsers
 COPY --from=playwright-deps /root/.cache/ms-playwright-go /opt/ms-playwright-go
 
 RUN chmod -R 755 /opt/browsers \
-    && chmod -R 755 /opt/ms-playwright-go
+    && chmod -R 755 /opt/ms-playwright-go \
+    && chown -R scraper:scraper /opt/browsers /opt/ms-playwright-go
 
 COPY --from=builder /usr/bin/google-maps-scraper /usr/bin/
+
+USER scraper
 
 ENTRYPOINT ["google-maps-scraper"]
