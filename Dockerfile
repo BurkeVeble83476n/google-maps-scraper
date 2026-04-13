@@ -5,9 +5,9 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/opt/browsers
 RUN export PATH=$PATH:/usr/local/go/bin:/root/go/bin \
     && apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates curl wget \
-    && wget -q https://go.dev/dl/go1.26.2.linux-amd64.tar.gz \
-    && tar -C /usr/local -xzf go1.26.2.linux-amd64.tar.gz \
-    && rm go1.26.2.linux-amd64.tar.gz \
+    && wget -q https://go.dev/dl/go1.23.2.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz \
+    && rm go1.23.2.linux-amd64.tar.gz \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
     && apt-get clean \
@@ -17,7 +17,7 @@ RUN export PATH=$PATH:/usr/local/go/bin:/root/go/bin \
     && playwright install chromium --with-deps
 
 # Build stage
-FROM golang:1.26.2-trixie AS builder
+FROM golang:1.23.2-bookworm AS builder
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
@@ -25,7 +25,8 @@ COPY . .
 RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o /usr/bin/google-maps-scraper
 
 # Final stage
-FROM debian:trixie-slim
+# Using bookworm-slim to match the builder stage and avoid potential glibc mismatches
+FROM debian:bookworm-slim
 ENV PLAYWRIGHT_BROWSERS_PATH=/opt/browsers
 ENV PLAYWRIGHT_DRIVER_PATH=/opt
 
