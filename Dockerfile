@@ -56,6 +56,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libasound2 \
     # fonts-liberation helps with consistent text rendering in headless chromium
     fonts-liberation \
+    # fonts-noto provides broader Unicode coverage for non-Latin place names
+    fonts-noto \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
