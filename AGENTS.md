@@ -29,3 +29,5 @@
 - The `--depth` flag significantly affects runtime; default of 1 is usually sufficient for most use cases
 - Prefer running with `--lang en` when testing to keep output consistent and easier to parse
 - For local CSV output, pipe results through `sort -u` to deduplicate if running the same query multiple times
+- Use `--zoom 15` for city-level searches; zoom 12-13 works better for broader regional queries
+- When scraping large result sets, add a short sleep between runs (`sleep 30`) to reduce the chance of soft bans
