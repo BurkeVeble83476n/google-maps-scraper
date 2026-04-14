@@ -7,6 +7,7 @@
 - `make vet` - Run go vet static analysis
 - `make format` - Format code with gofmt
 - `go test ./path/to/package` - Run tests for a specific package
+- `go test -run TestName ./path/to/package` - Run a single specific test
 
 ## Code Style Guidelines
 - Use `gofmt` for formatting (spaces, not tabs)
@@ -22,3 +23,7 @@
 - Add godoc comments for exported types and functions
 - Use `nolint` comments sparingly with explanations
 - Avoid magic numbers, use named constants or comment them
+
+## Personal Notes
+- When experimenting with scraper depth/concurrency settings, start low (1-2 workers) to avoid rate limiting
+- The `--depth` flag significantly affects runtime; default of 1 is usually sufficient for most use cases
