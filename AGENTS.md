@@ -27,3 +27,5 @@
 ## Personal Notes
 - When experimenting with scraper depth/concurrency settings, start low (1-2 workers) to avoid rate limiting
 - The `--depth` flag significantly affects runtime; default of 1 is usually sufficient for most use cases
+- Prefer running with `--lang en` when testing to keep output consistent and easier to parse
+- For local CSV output, pipe results through `sort -u` to deduplicate if running the same query multiple times
