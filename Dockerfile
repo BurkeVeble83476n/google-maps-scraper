@@ -33,6 +33,7 @@ ENV PLAYWRIGHT_DRIVER_PATH=/opt
 RUN useradd -m -u 1000 scraper
 
 # Install only the necessary dependencies in a single layer
+# Note: fonts-noto-cjk added for better coverage of Asian place names (useful for my use case)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     libnss3 \
@@ -58,6 +59,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-liberation \
     # fonts-noto provides broader Unicode coverage for non-Latin place names
     fonts-noto \
+    # fonts-noto-cjk provides coverage for Chinese, Japanese, and Korean characters
+    fonts-noto-cjk \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
