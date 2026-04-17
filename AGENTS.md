@@ -31,3 +31,5 @@
 - For local CSV output, pipe results through `sort -u` to deduplicate if running the same query multiple times
 - Use `--zoom 15` for city-level searches; zoom 12-13 works better for broader regional queries
 - When scraping large result sets, add a short sleep between runs (`sleep 30`) to reduce the chance of soft bans
+- Headless mode (`--headless`) is much faster for bulk runs; only disable it when debugging unexpected empty results
+- Keep input query files under ~50 queries per run; splitting large lists into chunks helps avoid session-level blocks
